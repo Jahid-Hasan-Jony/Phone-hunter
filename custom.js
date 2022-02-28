@@ -83,6 +83,10 @@ const loadData = (phone_slug) => {
                     Storage : 
                     ${selectedPhone.mainFeatures.storage}
                     </li>
+                    <li class="list-group-item">
+                    Sensor : 
+                    ${selectedPhone.mainFeatures.sensors}
+                    </li>
                 </ul>
             </div>`
         LoadDataDetails.innerHTML = foodItemDetails
