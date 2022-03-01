@@ -1,25 +1,40 @@
-const LoadDataDetails = document.querySelector('#Load-Data-Details');
-const searchPhone = () => {
-    const searchResultsField = document.querySelector(".search-results");
-    const searchInput = document.querySelector('#search-input');
-    let searchValue = searchInput.value;
-    searchInput.value = '';
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
+// loadSelectedDataDetails div selector
+const loadSelectedDataDetails = document.querySelector('#loadSelectedDataDetails');
 
+// searching function 
+const searchPhone = () => {
+    // search-results div selector
+    const searchResultsField = document.querySelector(".search-results");
+    // search input selector
+    const searchInput = document.querySelector('#search-input');
+    // searching input value
+    let searchValue = searchInput.value;
+    //seaching input value none while click search button
+    searchInput.value = '';
+    // API URL
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
+    // fetch data
     fetch(url)
         .then(response => response.json())
-        .then(responseData => {
-            searchResults(responseData.data)
-        })
-    const searchResults = (data) => {
-        LoadDataDetails.innerHTML = ''
+        .then(responseData => searchResults(responseData.data))
+
+    // search results function
+    const searchResults = (phoneData) => {
+        // Empty loadSelectedDataDetails div while multiple searching
+        loadSelectedDataDetails.innerHTML = ''
+        // Empty searchResultsField div while multiple searching
         searchResultsField.innerHTML = ''
+        // if searching results found
         if (data.length !== 0) {
             for (let index in data) {
+                // for limited searching result
                 if (index <= 14) {
-                    let phone = data[index];
+                    const phone = phoneData[index];
+                    // create a div element
                     const div = document.createElement('div');
+                    // add class for created div element
                     div.classList.add("col-md-4")
+                    // display phone card  
                     const phoneItem = `<div class="card text-center p-5">
                                             <img src="${phone.image}" class="card-img-top w-75 mx-auto" alt="">
                                             <div class="card-body">
@@ -30,11 +45,14 @@ const searchPhone = () => {
                                                 <a href="#" id ="loadDetails" class="btn btn-primary" onclick="selectedPhoneDetails('${phone.slug}')">Details</a>
                                             </div>
                                           </div>`
+                    //assign div innerHTML 
                     div.innerHTML = phoneItem
+                    // append div as a child of seach-result-field div
                     searchResultsField.appendChild(div)
                 }
             };
         }
+        // if search result not found
         else {
             const div = document.createElement('div');
             const notFoundDisplay = `
@@ -121,6 +139,6 @@ const selectedPhoneDetails = (phone_slug) => {
                     ${othersDetail ? othersDetail : ''}
                 </ul >
             </div > `
-        LoadDataDetails.innerHTML = phoneItemDetails;
+        loadSelectedDataDetails.innerHTML = phoneItemDetails;
     }
 }

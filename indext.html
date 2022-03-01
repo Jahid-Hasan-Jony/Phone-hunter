@@ -9,29 +9,36 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <title>Phone Collection</title>
+    <!-- Title -->
+    <title>Best Phone Collection</title>
 </head>
 
 <body>
-    <div class="container">
+    <main class="container">
+        <!-- Heading and Search box div start -->
         <div class="mt-5 py-5">
+            <!-- Display Heading -->
             <h1 class="text-center ">Search Your Favourite choose!</h1>
+            <!-- Search box div -->
             <div class="input-group mb-3 mx-auto w-50">
                 <input id="search-input" type="text" class="form-control" placeholder="Search Your Favourite Phone ..."
                     value="iphone">
+                <!-- search Button -->
                 <button class="btn btn-outline-secondary" type="button" id="search-button"
                     onclick="searchPhone()">Search</button>
             </div>
         </div>
+        <!-- Heading and Search box div start -->
 
-        <!-- Load Data Details -->
-        <div id="Load-Data-Details"></div>
-        <!-- search reasult area -->
-        <div class="search-results row g-4 p-5">
-        </div>
-    </div>
+        <!-- selected Phone Details Details div start-->
+        <div id="loadSelectedDataDetails"></div>
+        <!-- selected Phone Details Details div end-->
 
+        <!-- search reasult area div start-->
+        <div class="search-results row g-4 p-5"></div>
+        <!-- search reasult area div start-->
 
+    </main>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
