@@ -54,13 +54,17 @@ const searchPhone = () => {
         }
         // if search result not found
         else {
+            // create a div element
             const div = document.createElement('div');
+            // display no result found div
             const notFoundDisplay = `
             <div class="d-flex justify-content-center align-items-center">
             <h1>No Result Found</h1>
             </div>
             `
+            //assign div innerHTML 
             div.innerHTML = notFoundDisplay
+            // append div as a child of seach-result-field div
             searchResultsField.appendChild(div)
         }
     }
@@ -68,17 +72,20 @@ const searchPhone = () => {
 
 
 const selectedPhoneDetails = (phone_slug) => {
+    // API Phone detail url
     const url = `https://openapi.programming-hero.com/api/phone/${phone_slug}`;
+    // fetch data
     fetch(url)
         .then(response => response.json())
-        .then(responseData => {
-            console.log(responseData.data)
-            DisplayDataDetails(responseData.data)
-        })
+        .then(responseData => DisplayDataDetails(responseData.data))
 
+    // DisplayDataDetails function
     const DisplayDataDetails = (selectedPhone) => {
+        // othersDetail variable initialize
         let othersDetail;
+        // if 'others' property in the selectedPhone object
         if (selectedPhone?.others) {
+            // others items
             othersDetail = `<li class="list-group-item">
             Bluetooth : 
             ${selectedPhone.others.Bluetooth}
@@ -105,6 +112,7 @@ const selectedPhoneDetails = (phone_slug) => {
           </li >
           `
         }
+        // phone details div
         const phoneItemDetails = `<div class="card mx-auto" style="width: 18rem;">
                 <img src="${selectedPhone.image}" class="card-img-top w-75 mx-auto pt-3" alt="">
                 <div class="card-body">
@@ -139,6 +147,7 @@ const selectedPhoneDetails = (phone_slug) => {
                     ${othersDetail ? othersDetail : ''}
                 </ul >
             </div > `
+        // assinging loadSelectedDataDetails innerHTML
         loadSelectedDataDetails.innerHTML = phoneItemDetails;
     }
 }
