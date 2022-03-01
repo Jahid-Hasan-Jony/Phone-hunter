@@ -36,7 +36,6 @@ const searchPhone = (event) => {
 
     // search results function
     const searchResults = (phoneData) => {
-        console.log(phoneData)
         // Empty loadSelectedDataDetails div while multiple searching
         loadSelectedDataDetails.innerHTML = ''
         // Empty searchResultsField div while multiple searching
@@ -94,18 +93,22 @@ const searchPhone = (event) => {
         }
         // if search result not found
         else {
+            let noResultFound = "No Result Found";
+            let invalidInput = "Invalid Input";
             // create a div element
             const div = document.createElement('div');
             // display no result found div
             const notFoundDisplay = `
             <div class="text-center text-danger">
-            <h1>No Result Found</h1>
+            <h1>${searchValue ? noResultFound : invalidInput}</h1>
             </div>
             `
             //assign div innerHTML 
             div.innerHTML = notFoundDisplay
             // append div as a child of seach-result-field div
             searchResultsField.appendChild(div)
+            showmore.classList?.remove('d-block')
+            showmore.classList.add('d-none')
         }
     }
 }
