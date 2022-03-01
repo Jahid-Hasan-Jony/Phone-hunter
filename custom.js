@@ -28,7 +28,7 @@ const searchPhone = () => {
         if (phoneData.length !== 0 && searchValue !== '') {
             for (let index in phoneData) {
                 // for limited searching result
-                if (index <= 14) {
+                if (index <= 19) {
                     const phone = phoneData[index];
                     // create a div element
                     const div = document.createElement('div');
