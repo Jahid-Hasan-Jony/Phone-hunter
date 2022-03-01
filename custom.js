@@ -25,8 +25,8 @@ const searchPhone = () => {
         // Empty searchResultsField div while multiple searching
         searchResultsField.innerHTML = ''
         // if searching results found
-        if (data.length !== 0) {
-            for (let index in data) {
+        if (phoneData.length !== 0 && searchValue !== '') {
+            for (let index in phoneData) {
                 // for limited searching result
                 if (index <= 14) {
                     const phone = phoneData[index];
@@ -35,7 +35,7 @@ const searchPhone = () => {
                     // add class for created div element
                     div.classList.add("col-md-4")
                     // display phone card  
-                    const phoneItem = `<div class="card text-center p-5">
+                    const phoneItem = `<div class="card text-center p-5 shadow">
                                             <img src="${phone.image}" class="card-img-top w-75 mx-auto" alt="">
                                             <div class="card-body">
                                                 <h5 class="card-title">${phone.brand}</h5>
@@ -58,7 +58,7 @@ const searchPhone = () => {
             const div = document.createElement('div');
             // display no result found div
             const notFoundDisplay = `
-            <div class="d-flex justify-content-center align-items-center">
+            <div class="text-center text-danger">
             <h1>No Result Found</h1>
             </div>
             `
@@ -113,40 +113,49 @@ const selectedPhoneDetails = (phone_slug) => {
           `
         }
         // phone details div
-        const phoneItemDetails = `<div class="card mx-auto" style="width: 18rem;">
-                <img src="${selectedPhone.image}" class="card-img-top w-75 mx-auto pt-3" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">${selectedPhone.brand}</h5>
+        const phoneItemDetails = `
+        <div class="card mx-5 shadow p-2">
+            <div class="row g-0">
+                <div class="col-md-4 d-flex justify-content-center align-items-center pb-3">
+                    <img src="${selectedPhone.image}" class="card-img-top w-75 mx-auto pt-3" alt="">
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Model Name : ${selectedPhone.name}</li>
-                    <li class="list-group-item">
-                    Release Date : 
-                ${selectedPhone.releaseDate ? selectedPhone.releaseDate : 'No Release Date Found'}
-                    </li>
-                    <li class="list-group-item">
-                    ChipSet : 
-                    ${selectedPhone.mainFeatures.chipSet}
-                    </li>
-                    <li class="list-group-item">
-                    Display Size : 
-                    ${selectedPhone.mainFeatures.displaySize}
-                    </li>
-                    <li class="list-group-item">
-                    Memory : 
-                    ${selectedPhone.mainFeatures.memory}
-                    </li>
-                    <li class="list-group-item">
-                    Storage : 
-                    ${selectedPhone.mainFeatures.storage}
-                    </li>
-                    <li class="list-group-item">
-                    Sensor : 
-                    ${selectedPhone.mainFeatures.sensors}
-                    </li>
-                    ${othersDetail ? othersDetail : ''}
-                </ul >
-            </div > `
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">${selectedPhone.brand}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush d-flex">
+                        <li class="list-group-item">
+                        Model Name : ${selectedPhone.name}
+                        </li>
+                        <li class="list-group-item">
+                        Release Date : 
+                        ${selectedPhone.releaseDate ? selectedPhone.releaseDate : 'No Release Date Found'}
+                        </li>
+                        <li class="list-group-item">
+                        ChipSet : 
+                        ${selectedPhone.mainFeatures.chipSet}
+                        </li>
+                        <li class="list-group-item">
+                        Display Size : 
+                        ${selectedPhone.mainFeatures.displaySize}
+                        </li>
+                        <li class="list-group-item">
+                        Memory : 
+                        ${selectedPhone.mainFeatures.memory}
+                        </li>
+                        <li class="list-group-item">
+                        Storage : 
+                        ${selectedPhone.mainFeatures.storage}
+                        </li>
+                        <li class="list-group-item">
+                        Sensor : 
+                        ${selectedPhone.mainFeatures.sensors}
+                        </li>
+                        ${othersDetail ? othersDetail : ''}
+                    </ul >
+                </div>
+            </div>
+        </div > `
         // assinging loadSelectedDataDetails innerHTML
         loadSelectedDataDetails.innerHTML = phoneItemDetails;
     }
