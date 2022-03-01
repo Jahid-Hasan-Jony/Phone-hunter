@@ -1,16 +1,32 @@
 // loadSelectedDataDetails div selector
 const loadSelectedDataDetails = document.querySelector('#loadSelectedDataDetails');
-
+// show more button selector
+let showmore = document.querySelector('.showmore')
+// search-results div selector
+const searchResultsField = document.querySelector(".search-results");
+// search input selector
+const searchInput = document.querySelector('#search-input');
+// declare search value for show more button
+let searchValueForShowMoreBtn = '';
 // searching function 
-const searchPhone = () => {
-    // search-results div selector
-    const searchResultsField = document.querySelector(".search-results");
-    // search input selector
-    const searchInput = document.querySelector('#search-input');
+const searchPhone = (event) => {
+    let buttonText = event.target.innerText;
     // searching input value
     let searchValue = searchInput.value;
     //seaching input value none while click search button
     searchInput.value = '';
+    // search value for show more button
+    if (searchValue) {
+        searchValueForShowMoreBtn = ''
+        searchValueForShowMoreBtn = searchValue
+    } else {
+        searchValueForShowMoreBtn += searchValue;
+    }
+
+    // initialize for search value while show more button click
+    if (buttonText === 'Show More') {
+        searchValue = searchValueForShowMoreBtn;
+    }
     // API URL
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
     // fetch data
@@ -20,15 +36,25 @@ const searchPhone = () => {
 
     // search results function
     const searchResults = (phoneData) => {
+        console.log(phoneData)
         // Empty loadSelectedDataDetails div while multiple searching
         loadSelectedDataDetails.innerHTML = ''
         // Empty searchResultsField div while multiple searching
         searchResultsField.innerHTML = ''
         // if searching results found
         if (phoneData.length !== 0 && searchValue !== '') {
+            // showing cards limit variable
+            let cardslimit;
+            if (buttonText === 'Search') {
+                // for showing 20 cards
+                cardslimit = 19;
+            } else {
+                // for showing all cards
+                cardslimit = phoneData.length;
+            }
             for (let index in phoneData) {
                 // for limited searching result
-                if (index <= 19) {
+                if (index <= cardslimit) {
                     const phone = phoneData[index];
                     // create a div element
                     const div = document.createElement('div');
@@ -44,13 +70,27 @@ const searchPhone = () => {
                                                 </p>
                                                 <a href="#" id ="loadDetails" class="btn btn-primary" onclick="selectedPhoneDetails('${phone.slug}')">Details</a>
                                             </div>
-                                          </div>`
+                                          </div>
+                                          `
                     //assign div innerHTML 
                     div.innerHTML = phoneItem
                     // append div as a child of seach-result-field div
                     searchResultsField.appendChild(div)
                 }
             };
+            // show more button hide/unhide
+            if (phoneData.length > 20) {
+                // hiding show more button
+                if (buttonText === 'Show More') {
+                    showmore.classList.remove('d-block')
+                    showmore.classList.add('d-none')
+                }
+                // showing show more button
+                else {
+                    showmore.classList.remove('d-none')
+                    showmore.classList.add('d-block')
+                }
+            }
         }
         // if search result not found
         else {
@@ -149,7 +189,7 @@ const selectedPhoneDetails = (phone_slug) => {
                         </li>
                         <li class="list-group-item">
                         Sensor : 
-                        ${selectedPhone.mainFeatures.sensors}
+                        ${selectedPhone.mainFeatures.sensors.join(" | ")}
                         </li>
                         ${othersDetail ? othersDetail : ''}
                     </ul >

@@ -24,7 +24,7 @@
                 <input id="search-input" type="text" class="form-control" placeholder="Search Your Favourite Phone ...">
                 <!-- search Button -->
                 <button class="btn btn-outline-secondary" type="button" id="search-button"
-                    onclick="searchPhone()">Search</button>
+                    onclick="searchPhone(event)">Search</button>
             </div>
         </div>
         <!-- Heading and Search box div start -->
@@ -37,6 +37,11 @@
         <div class="search-results row g-4 p-5"></div>
         <!-- search reasult area div start-->
 
+        <!-- Show More Button start -->
+        <div class="showmore d-none mb-5 d-grid col-6 mx-auto">
+            <button class="btn btn-outline-primary" onclick="searchPhone(event)">Show More</button>
+        </div>
+        <!-- Show More Button End -->
     </main>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
