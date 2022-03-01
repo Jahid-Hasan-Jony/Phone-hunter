@@ -154,7 +154,7 @@ const selectedPhoneDetails = (phone_slug) => {
         }
         // phone details div
         const phoneItemDetails = `
-        <div class="card mx-5 shadow p-2">
+        <div class="card mx-5 shadow px-2 py-3">
             <div class="row g-0">
                 <div class="col-md-4 d-flex justify-content-center align-items-center pb-3">
                     <img src="${selectedPhone.image}" class="card-img-top w-75 mx-auto pt-3" alt="">
