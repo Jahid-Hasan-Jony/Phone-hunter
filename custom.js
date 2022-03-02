@@ -6,10 +6,21 @@ let showmore = document.querySelector('.showmore')
 const searchResultsField = document.querySelector(".search-results");
 // search input selector
 const searchInput = document.querySelector('#search-input');
+// spinner div selector
+const spinner = document.querySelector('.spinner');
 // declare search value for show more button
 let searchValueForShowMoreBtn = '';
 // searching function 
+
+// div hide/unhide
+let divDisply = (div, property) => { div.style.display = property }
+
+// hide spinner
+divDisply(spinner, "none");
+
 const searchPhone = (event) => {
+    //show spinner
+    divDisply(spinner, "block");
     let buttonText = event.target.innerText;
     // searching input value
     let searchValue = searchInput.value;
@@ -47,6 +58,7 @@ const searchPhone = (event) => {
             if (buttonText === 'Search') {
                 // for showing 20 cards
                 cardslimit = 19;
+
             } else {
                 // for showing all cards
                 cardslimit = phoneData.length;
@@ -76,23 +88,30 @@ const searchPhone = (event) => {
                     // append div as a child of seach-result-field div
                     searchResultsField.appendChild(div)
                 }
+                if (index == 19 && buttonText === 'Search') {
+                    break;
+                }
             };
             // show more button hide/unhide
             if (phoneData.length > 20) {
                 // hiding show more button
                 if (buttonText === 'Show More') {
+                    // hide show more button
                     showmore.classList.remove('d-block')
                     showmore.classList.add('d-none')
                 }
                 // showing show more button
                 else {
+                    // showing show more button
                     showmore.classList.remove('d-none')
                     showmore.classList.add('d-block')
                 }
             }
+            divDisply(spinner, "none");
         }
         // if search result not found
         else {
+            divDisply(spinner, "none");
             let noResultFound = "No Result Found";
             let invalidInput = "Invalid Input";
             // create a div element
@@ -107,6 +126,7 @@ const searchPhone = (event) => {
             div.innerHTML = notFoundDisplay
             // append div as a child of seach-result-field div
             searchResultsField.appendChild(div)
+            // hide show more button
             showmore.classList?.remove('d-block')
             showmore.classList.add('d-none')
         }
@@ -129,30 +149,37 @@ const selectedPhoneDetails = (phone_slug) => {
         // if 'others' property in the selectedPhone object
         if (selectedPhone?.others) {
             // others items
-            othersDetail = `<li class="list-group-item">
-            Bluetooth : 
-            ${selectedPhone.others.Bluetooth}
-          </li >
-          <li class="list-group-item">
-            GPS : 
-            ${selectedPhone.others.GPS}
-          </li >
-          <li class="list-group-item">
-            NFC : 
-            ${selectedPhone.others.NFC}
-          </li >
-          <li class="list-group-item">
-            Radio : 
-            ${selectedPhone.others.Radio}
-          </li >
-          <li class="list-group-item">
-            USB : 
-            ${selectedPhone.others.USB}
-          </li >
-          <li class="list-group-item">
-            WLAN : 
-            ${selectedPhone.others.WLAN}
-          </li >
+            othersDetail = `
+            <hr>
+            <div class="card-body py-0">
+                <h5 class="card-title">Others :</h5>
+            </div>
+            <ul class="list-group list-group-flush d-flex">
+                <li class="list-group-item">
+                Bluetooth : 
+                ${selectedPhone.others.Bluetooth}
+                </li >
+                <li class="list-group-item">
+                    GPS : 
+                    ${selectedPhone.others.GPS}
+                </li >
+                <li class="list-group-item">
+                    NFC : 
+                    ${selectedPhone.others.NFC}
+                </li >
+                <li class="list-group-item">
+                    Radio : 
+                    ${selectedPhone.others.Radio}
+                </li >
+                <li class="list-group-item">
+                    USB : 
+                    ${selectedPhone.others.USB}
+                </li >
+                <li class="list-group-item">
+                    WLAN : 
+                    ${selectedPhone.others.WLAN}
+                </li >
+            </ul>
           `
         }
         // phone details div
@@ -164,16 +191,16 @@ const selectedPhoneDetails = (phone_slug) => {
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">${selectedPhone.brand}</h5>
+                        <h4>Brand Name : ${selectedPhone.brand}</h5>
+                        <h4>Model Name : ${selectedPhone.name}</h6>
+                        <h4>Release Date : 
+                        ${selectedPhone.releaseDate ? selectedPhone.releaseDate : 'No Release Date Found'}</h6>
+                    </div>
+                    <hr>
+                    <div class="card-body py-0">
+                        <h5 class="card-title">Main Features :</h5>
                     </div>
                     <ul class="list-group list-group-flush d-flex">
-                        <li class="list-group-item">
-                        Model Name : ${selectedPhone.name}
-                        </li>
-                        <li class="list-group-item">
-                        Release Date : 
-                        ${selectedPhone.releaseDate ? selectedPhone.releaseDate : 'No Release Date Found'}
-                        </li>
                         <li class="list-group-item">
                         ChipSet : 
                         ${selectedPhone.mainFeatures.chipSet}
@@ -194,8 +221,8 @@ const selectedPhoneDetails = (phone_slug) => {
                         Sensor : 
                         ${selectedPhone.mainFeatures.sensors.join(" | ")}
                         </li>
-                        ${othersDetail ? othersDetail : ''}
                     </ul >
+                    ${othersDetail ? othersDetail : ''}
                 </div>
             </div>
         </div > `
